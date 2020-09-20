@@ -7,8 +7,6 @@ import Loadable from 'react-loadable';
 import { AUTH_LOGIN } from '@utils/client-utils';
 import { useHistory } from 'react-router-dom';
 import '@styles/app.scss';
-import dateUtils from 'mainam-react-native-date-utils';
-import stringUtils from 'mainam-react-native-string-utils';
 
 function Loading() {
   return <div></div>;
@@ -34,7 +32,7 @@ function Main(props) {
   const { auth } = props;
 
   useEffect(() => {
-    if (window.location.pathname == '/logout') return;
+    if (window.location.pathname === '/logout') return;
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const authCode = urlParams.get('code');

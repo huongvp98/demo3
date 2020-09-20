@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import RouterWithPaths from '@components/common/RouterWithPaths';
 import Loadable from 'react-loadable';
 import Header from '@containers/header';
+import Footer from '@containers/footer';
 function Loading() {
   return <div></div>;
 }
@@ -16,9 +17,6 @@ function NotFound() {
 }
 
 function Layout(props) {
-  const {
-    location: { pathname },
-  } = props;
   const routers = [
     {
       path: ['/'],
@@ -61,6 +59,7 @@ function Layout(props) {
         })}
         <Route path="*" component={NotFound} />
       </Switch>
+      <Footer />
     </>
   );
 }

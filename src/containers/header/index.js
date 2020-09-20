@@ -13,6 +13,9 @@ function index(props) {
     history.push(e.key);
     setPathName(e.key);
   };
+  const goToCart = () => {
+    history.push('/cart');
+  };
   return (
     <>
       <div className="header">
@@ -21,6 +24,7 @@ function index(props) {
             <div className="col-sm-12 col-md-3 logo">
               <img
                 src={require('@resources/images/home/Shopi-logo.png')}
+                alt=""
               />
               <span>SBook</span>
             </div>
@@ -44,7 +48,7 @@ function index(props) {
               </div>
             </div>
             <div className="col-sm-1 col-md-1 col-1 cart-header">
-              <div className="icon-header">
+              <div className="icon-header" onClick={goToCart}>
                 <i className="fal fa-shopping-cart"></i>
                 <div className="total-product">
                   {total ? total : 0}

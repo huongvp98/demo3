@@ -16,8 +16,8 @@ export default {
       let listCart = state.cart.listCart;
       let { n, item } = payload;
 
-      let check = listCart.findIndex((item2) => item2.id == item.id);
-      if (check == -1) {
+      let check = listCart.findIndex((item2) => item2.id === item.id);
+      if (check === -1) {
         let copyItem = item;
         copyItem.soLuong = 1;
         listCart.push(copyItem);
@@ -42,7 +42,7 @@ export default {
         content: `Bạn có muốn xóa ${payload.name} khỏi giỏ hàng?`,
         onOk() {
           let listCart = state.cart.listCart.filter((item) => {
-            if (item.id == payload.id) {
+            if (item.id === payload.id) {
               return false;
             } else {
               return true;

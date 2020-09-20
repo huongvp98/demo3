@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './style.scss';
 
 function index(props) {
-  const { listCart, deleteItem, addItem, productInCart } = props;
+  const { listCart, deleteItem, addItem } = props;
   let data = listCart.map((item, index) => {
     return {
       key: item.id,
@@ -17,7 +17,7 @@ function index(props) {
     };
   });
   const changeAmount = ({ n, item }) => {
-    if (n == -1 && item.soLuong == 1) {
+    if (n === -1 && item.soLuong === 1) {
       deleteItem(item);
     } else {
       addItem({ n, item });
@@ -33,7 +33,7 @@ function index(props) {
               dataIndex: 'col2',
               key: '2',
               render: (link) => {
-                return <img src={link} />;
+                return <img src={link} alt="" />;
               },
             },
             {

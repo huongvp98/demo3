@@ -1,7 +1,9 @@
 .cart-body {
   margin-top: 130px;
+  min-height: calc(100vh - 130px);
   @media (max-width: 767px) {
     margin-top: 180px;
+    min-height: calc(100vh - 180px);
   }
 }
 .ant-table-tbody {

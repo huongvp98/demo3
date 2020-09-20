@@ -5,18 +5,13 @@ import { connect } from 'react-redux';
 const { Option } = Select;
 
 function index(props) {
-  const slideImages = [
-    '@resources/images/home/slide1.jpg',
-    '@resources/images/home/slide2.jpg',
-    '@resources/images/home/slide3.jpg',
-  ];
-  const { listBook, value, updateData, listCart, addItem } = props;
+  const { listBook, value, updateData, addItem } = props;
   const [listBook2, setlistBook] = useState(listBook);
   const filterBook = (e, action) => {
     let listCoppy = [];
-    if (action == 'value' && e) {
+    if (action === 'value' && e) {
       listBook.map((item) => {
-        if (item.value == e) listCoppy.push(item);
+        if (item.value === e) listCoppy.push(item);
       });
       setlistBook(listCoppy);
     } else {

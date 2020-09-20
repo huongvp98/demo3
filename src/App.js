@@ -1,5 +1,4 @@
 import React from 'react';
-import stringUtils from 'mainam-react-native-string-utils';
 import Main from './Main';
 import { Provider } from 'react-redux';
 import stores from '@redux-store/stores';
