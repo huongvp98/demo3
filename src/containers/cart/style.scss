@@ -1,0 +1,44 @@
+.cart-body {
+  margin-top: 130px;
+  @media (max-width: 767px) {
+    margin-top: 180px;
+  }
+}
+.ant-table-tbody {
+  font-size: 20px;
+  @media (max-width: 519px) {
+    font-size: 14px;
+  }
+  .ant-table-row {
+    td {
+      img {
+        width: 120px;
+        @media (max-width: 519px) {
+          width: 68px;
+        }
+      }
+      .ant-btn {
+        @media (max-width: 519px) {
+          padding: 6px 8px;
+        }
+      }
+    }
+  }
+}
+.amount {
+  display: inline-block;
+  width: 37px;
+  text-align: center;
+  @media (max-width: 439px) {
+    width: 23px;
+  }
+}
+.book-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-bottom: 10px;
+  font-weight: bold;
+}

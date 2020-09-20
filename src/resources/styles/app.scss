@@ -1,0 +1,18 @@
+@import 'date-popup.scss';
+@import 'ant-select.scss';
+.error {
+  margin-top: 2px;
+  color: red;
+  font-size: 12px;
+  width: 167px;
+  display: inline-block;
+}
+
+body {
+  font-family: Muli, sans-serif !important;
+}
+
+.white-space {
+  word-break: break-word;
+  white-space: pre-line;
+}

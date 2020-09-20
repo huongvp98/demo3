@@ -1,0 +1,26 @@
+.warp-contact {
+  margin-top: 180px;
+  .body-contact {
+    width: 600px;
+    margin: auto;
+    @media (max-width: 605px) {
+      width: 380px;
+    }
+    @media (max-width: 400px) {
+      width: 300px;
+    }
+    img {
+      width: 40px;
+      border-radius: 6px;
+    }
+    a {
+      display: inline-block;
+      width: 327px;
+      @media (max-width: 400px) {
+        width: 250px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
