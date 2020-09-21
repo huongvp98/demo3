@@ -7,8 +7,7 @@ const originUrl = window.location.origin;
 const pathname = window.location.pathname;
 const search = window.location.search;
 
-const HOST_AUTH = 'https://110.api.emr.test.isofh.vn';
-
+const HOST_AUTH = 'https://5f68053038ce8700163989ff.mockapi.io/';
 const AUTH_LOGIN = combineUrlParams(
   `${HOST_AUTH}${authPath}/authorize`,
   {
@@ -69,10 +68,10 @@ client.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
-      window.location.href =
-        '/logout?redirect=' + encodeURIComponent(AUTH_LOGIN);
-    }
+    // if (error.response.status === 401) {
+    //   window.location.href =
+    //     '/logout?redirect=' + encodeURIComponent(AUTH_LOGIN);
+    // }
     return Promise.reject(error);
   },
 );

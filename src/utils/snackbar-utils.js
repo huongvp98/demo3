@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { toast } from 'react-toastify';
 export default {
   showShort(message, type) {
     this.show(message, type, 3000);
@@ -8,17 +8,16 @@ export default {
   },
   show(message, type, duration) {
     if (duration != 0 && !duration) duration = 3000;
-    let _type = "info";
+    let _type = 'info';
     switch (type) {
-      case "warning":
-      case "info":
-      case "success":
-      case "danger":
+      case 'warning':
+      case 'info':
+      case 'success':
+      case 'danger':
         _type = type;
         break;
     }
-    this.showWithTitle("iSofH Hrm", message, _type, duration);
-
+    this.showWithTitle('SBook', message, _type, duration);
     // Toast.show({
     //     text: message,
     //     duration: 3000,
@@ -26,20 +25,20 @@ export default {
     // });
   },
   showWithTitle(message, description, type, duration) {
+    let func = toast.success;
     switch (type) {
-      case "danger":
-        message.error(description);
+      case 'danger':
+        func = toast.error;
         break;
-      case "info":
-        message.info(description);
+      case 'info':
+        func = toast.info;
         break;
-      case "warning":
-        message.warn(description);
-        break;
-      case "success":
-      case "default":
-        message.success(description);
+      case 'warning':
+        func = toast.warn;
         break;
     }
+    func(description, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   },
 };

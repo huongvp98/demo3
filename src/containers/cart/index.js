@@ -1,28 +1,24 @@
 import { Button, Table } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './style.scss';
 
 function index(props) {
-  const { listCart, deleteItem, addItem } = props;
+  const { listCart, deleteItem, addItem, loadCart } = props;
+  useEffect(() => {
+    loadCart();
+  }, []);
   let data = listCart.map((item, index) => {
     return {
       key: item.id,
       col1: index + 1,
-      col2: item.link,
-      col3: item.name,
+      col2: item.cart.avatar,
+      col3: item.cart.name,
 
       col4: item,
       col5: item,
     };
   });
-  const changeAmount = ({ n, item }) => {
-    if (n === -1 && item.soLuong === 1) {
-      deleteItem(item);
-    } else {
-      addItem({ n, item });
-    }
-  };
   return (
     <>
       <div className="cart-body">
@@ -32,8 +28,8 @@ function index(props) {
               title: 'Ảnh Bìa',
               dataIndex: 'col2',
               key: '2',
-              render: (link) => {
-                return <img src={link} alt="" />;
+              render: (avatar) => {
+                return <img src={avatar} alt="" />;
               },
             },
             {
@@ -52,15 +48,11 @@ function index(props) {
               render: (item) => {
                 return (
                   <div>
-                    <Button
-                      onClick={() => changeAmount({ n: -1, item })}
-                    >
+                    <Button onClick={() => addItem({ n: -1, item })}>
                       -
                     </Button>
-                    <span className="amount">{item.soLuong}</span>
-                    <Button
-                      onClick={() => changeAmount({ n: 1, item })}
-                    >
+                    <span className="amount">{item.amount}</span>
+                    <Button onClick={() => addItem({ n: 1, item })}>
                       +
                     </Button>
                   </div>
@@ -96,8 +88,11 @@ const mapStateToProps = (state) => {
   } = state;
   return { listCart, productInCart };
 };
-const mapDispatchToProps = ({ cart: { deleteItem, addItem } }) => ({
+const mapDispatchToProps = ({
+  cart: { deleteItem, addItem, loadCart },
+}) => ({
   deleteItem,
   addItem,
+  loadCart,
 });
 export default connect(mapStateToProps, mapDispatchToProps)(index);

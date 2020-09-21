@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Carousel, Select } from 'antd';
 import './style.scss';
 import { connect } from 'react-redux';
 const { Option } = Select;
 
 function index(props) {
-  const { listBook, value, updateData, addItem } = props;
-  const [listBook2, setlistBook] = useState(listBook);
-  const filterBook = (e, action) => {
-    let listCoppy = [];
-    if (action === 'value' && e) {
-      listBook.map((item) => {
-        if (item.value === e) listCoppy.push(item);
-      });
-      setlistBook(listCoppy);
-    } else {
-      setlistBook(listBook);
-    }
-  };
+  const {
+    listBook,
+    type,
+    updateData,
+    addItem,
+    loadBook,
+    nameSearch,
+  } = props;
+  useEffect(() => {
+    loadBook();
+  }, []);
 
   return (
     <>
@@ -60,10 +58,10 @@ function index(props) {
                 <Select
                   placeholder="Lọc theo loại sách"
                   onChange={(e) => {
-                    updateData({ value: e });
-                    filterBook(e, 'value');
+                    updateData({ type: e });
+                    loadBook();
                   }}
-                  value={value}
+                  value={type}
                 >
                   <Option value="">Tất cả</Option>
                   <Option value={1}>Sách văn học</Option>
@@ -72,12 +70,12 @@ function index(props) {
                 </Select>
               </div>
               <div className="list-box">
-                {listBook2.map((item) => {
+                {listBook.map((item) => {
                   return (
                     <Card
                       key={item.id}
                       hoverable
-                      cover={<img alt="" src={item.link} />}
+                      cover={<img alt="" src={item.avatar} />}
                     >
                       <span className="title-book">{item.name}</span>
                       <div className="button-add">
@@ -101,16 +99,17 @@ function index(props) {
 
 const mapStateToProps = (state) => {
   const {
-    book: { listBook, value },
+    book: { listBook, type, nameSearch },
     cart: { listCart },
   } = state;
-  return { listBook, value, listCart };
+  return { listBook, type, listCart, nameSearch };
 };
 const mapDispatchToProps = ({
-  book: { updateData },
+  book: { updateData, loadBook },
   cart: { addItem },
 }) => ({
   updateData,
   addItem,
+  loadBook,
 });
 export default connect(mapStateToProps, mapDispatchToProps)(index);

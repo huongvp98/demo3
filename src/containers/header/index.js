@@ -1,12 +1,26 @@
 import { Button, Input, Menu } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import './style.scss';
 
 function index(props) {
-  const { total } = props;
+  const {
+    total,
+    nameSearch,
+    loadBook,
+    updateData,
+    timeRequest,
+    listCart,
+    loadCart,
+  } = props;
+  useEffect(() => {
+    updateData({
+      nameSearch: '',
+    });
+    loadCart();
+  }, []);
   const [pathname, setPathName] = useState(window.location.pathname);
   const history = useHistory();
   const changeKey = (e) => {
@@ -15,6 +29,24 @@ function index(props) {
   };
   const goToCart = () => {
     history.push('/cart');
+  };
+  const searchBook = (event) => {
+    updateData({ nameSearch: event.target.value });
+    if (timeRequest) {
+      try {
+        clearTimeout(timeRequest);
+      } catch (error) {}
+    }
+
+    let data = setTimeout(() => {
+      loadBook();
+    }, 500);
+    updateData({ timeRequest: data });
+  };
+  const getAmount = () => {
+    var x = 0;
+    listCart.map((item) => (x += item.amount));
+    return x;
   };
   return (
     <>
@@ -30,14 +62,18 @@ function index(props) {
             </div>
             <div className="col-sm-10 col-md-8 col-9 search-area">
               <div className="search-inner">
-                <Input />
+                <Input
+                  value={nameSearch}
+                  onChange={(event) => {
+                    searchBook(event);
+                  }}
+                />
                 <Button>Tìm kiếm</Button>
               </div>
               <div className="navigation-bar">
                 <Menu
                   theme="dark"
                   mode="horizontal"
-                  // defaultSelectedKeys={['1']}
                   selectedKeys={[pathname]}
                   onClick={(e) => changeKey(e)}
                 >
@@ -50,9 +86,7 @@ function index(props) {
             <div className="col-sm-1 col-md-1 col-1 cart-header">
               <div className="icon-header" onClick={goToCart}>
                 <i className="fal fa-shopping-cart"></i>
-                <div className="total-product">
-                  {total ? total : 0}
-                </div>
+                <div className="total-product">{getAmount()}</div>
               </div>
             </div>
           </div>
@@ -64,8 +98,17 @@ function index(props) {
 }
 const mapStateToProps = (state) => {
   const {
-    cart: { total },
+    book: { nameSearch, timeRequest },
+    cart: { total, listCart },
   } = state;
-  return { total };
+  return { total, nameSearch, timeRequest, listCart };
 };
-export default connect(mapStateToProps)(index);
+const mapDispatchToProps = ({
+  book: { loadBook, updateData },
+  cart: { loadCart },
+}) => ({
+  loadBook,
+  updateData,
+  loadCart,
+});
+export default connect(mapStateToProps, mapDispatchToProps)(index);

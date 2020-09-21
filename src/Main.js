@@ -7,6 +7,8 @@ import Loadable from 'react-loadable';
 import { AUTH_LOGIN } from '@utils/client-utils';
 import { useHistory } from 'react-router-dom';
 import '@styles/app.scss';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 function Loading() {
   return <div></div>;
@@ -92,25 +94,28 @@ function Main(props) {
   }
 
   return (
-    <BrowserRouter>
-      <Switch>
-        {routers.map((route, key) => {
-          if (route.component)
-            return (
-              <RouterWithPaths
-                exact
-                key={key}
-                path={route.path}
-                render={(props) => {
-                  return <route.component {...props} />;
-                }}
-              />
-            );
-          return null;
-        })}
-        <Route path="*" component={NotFound} />
-      </Switch>
-    </BrowserRouter>
+    <>
+      <ToastContainer autoClose={3000} />
+      <BrowserRouter>
+        <Switch>
+          {routers.map((route, key) => {
+            if (route.component)
+              return (
+                <RouterWithPaths
+                  exact
+                  key={key}
+                  path={route.path}
+                  render={(props) => {
+                    return <route.component {...props} />;
+                  }}
+                />
+              );
+            return null;
+          })}
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 }
 
