@@ -16,7 +16,14 @@ function index(props) {
   useEffect(() => {
     loadBook();
   }, []);
-
+  const onAddItem = (n, payload) => {
+    let item = {
+      cart: payload,
+      cartId: payload.id,
+      amount: 0,
+    };
+    addItem({ n, item });
+  };
   return (
     <>
       <div className="warp-home">
@@ -79,9 +86,7 @@ function index(props) {
                     >
                       <span className="title-book">{item.name}</span>
                       <div className="button-add">
-                        <Button
-                          onClick={() => addItem({ n: 1, item })}
-                        >
+                        <Button onClick={() => onAddItem(1, item)}>
                           Add To Card
                         </Button>
                       </div>

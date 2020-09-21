@@ -9,7 +9,6 @@
     "axios": "^0.18.0",
     "crypto-js": "^3.1.9-1",
     "font-awesome": "^4.7.0",
-    "highcharts": "^8.2.0",
     "localforage": "^1.9.0",
     "mainam-react-native-date-utils": "^2.0.9",
     "mainam-react-native-string-utils": "^3.0.6",
@@ -25,9 +24,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "2.1.5",
     "react-toastify": "^6.0.8",
-    "react-webcam-barcode-scanner": "0.0.2-rc2",
     "redux": "^4.0.0",
-    "slide-ruler": "^1.2.1",
     "styled-components": "^5.1.1"
   },
   "babel": {

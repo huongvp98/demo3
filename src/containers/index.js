@@ -7,7 +7,6 @@ import Footer from '@containers/footer';
 function Loading() {
   return <div></div>;
 }
-
 function NotFound() {
   return (
     <>

@@ -43,11 +43,6 @@ function index(props) {
     }, 500);
     updateData({ timeRequest: data });
   };
-  const getAmount = () => {
-    var x = 0;
-    listCart.map((item) => (x += item.amount));
-    return x;
-  };
   return (
     <>
       <div className="header">
@@ -86,7 +81,7 @@ function index(props) {
             <div className="col-sm-1 col-md-1 col-1 cart-header">
               <div className="icon-header" onClick={goToCart}>
                 <i className="fal fa-shopping-cart"></i>
-                <div className="total-product">{getAmount()}</div>
+                <div className="total-product">{listCart.length}</div>
               </div>
             </div>
           </div>
