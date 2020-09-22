@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Carousel, Select } from 'antd';
+import { Button, Card, Carousel, Drawer, Select } from 'antd';
 import './style.scss';
 import { connect } from 'react-redux';
 const { Option } = Select;
@@ -12,6 +12,12 @@ function index(props) {
     addItem,
     loadBook,
     nameSearch,
+    visible,
+    name,
+    author,
+    description,
+    avatar,
+    id,
   } = props;
   useEffect(() => {
     loadBook();
@@ -23,6 +29,17 @@ function index(props) {
       amount: 0,
     };
     addItem({ n, item });
+    updateData({ visible: false });
+  };
+  const showDetail = (item) => {
+    updateData({
+      visible: true,
+      name: item.name,
+      description: item.description,
+      author: item.author,
+      avatar: item.avatar,
+      id: item.id,
+    });
   };
   return (
     <>
@@ -84,7 +101,12 @@ function index(props) {
                       hoverable
                       cover={<img alt="" src={item.avatar} />}
                     >
-                      <span className="title-book">{item.name}</span>
+                      <span
+                        className="title-book"
+                        onClick={() => showDetail(item)}
+                      >
+                        {item.name}
+                      </span>
                       <div className="button-add">
                         <Button onClick={() => onAddItem(1, item)}>
                           Add To Card
@@ -98,16 +120,83 @@ function index(props) {
           </div>
         </div>
       </div>
+      <Drawer
+        title={name}
+        onClose={() => {
+          updateData({ visible: false });
+        }}
+        placement="right"
+        visible={visible}
+        bodyStyle={{ paddingBottom: 80 }}
+      >
+        <div className="avata-detail">
+          <img src={avatar} />
+        </div>
+        <div className="info-detail">
+          <p className="title">Tác giả</p>
+          <p>{author}</p>
+        </div>
+        <div className="info-detail">
+          <p className="title">Mô tả</p>
+          <p>{description}</p>
+        </div>
+        <div className="button-detail">
+          <Button
+            onClick={() => {
+              updateData({ visible: false });
+            }}
+            style={{ marginRight: 8 }}
+          >
+            Close
+          </Button>
+          <Button
+            onClick={() =>
+              onAddItem(1, {
+                id,
+                name,
+                type,
+                author,
+                description,
+                avatar,
+              })
+            }
+            type="primary"
+          >
+            Add To Cart
+          </Button>
+        </div>
+      </Drawer>
     </>
   );
 }
 
 const mapStateToProps = (state) => {
   const {
-    book: { listBook, type, nameSearch },
+    book: {
+      listBook,
+      type,
+      nameSearch,
+      visible,
+      name,
+      author,
+      description,
+      avatar,
+      id,
+    },
     cart: { listCart },
   } = state;
-  return { listBook, type, listCart, nameSearch };
+  return {
+    listBook,
+    type,
+    listCart,
+    nameSearch,
+    name,
+    author,
+    description,
+    avatar,
+    visible,
+    id,
+  };
 };
 const mapDispatchToProps = ({
   book: { updateData, loadBook },
