@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Carousel, Drawer, Select } from 'antd';
 import './style.scss';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 const { Option } = Select;
-
-function index(props) {
+export default function index() {
   const {
     listBook,
-    type,
-    updateData,
-    addItem,
-    loadBook,
-    nameSearch,
     visible,
     name,
     author,
     description,
     avatar,
     id,
-  } = props;
+    type,
+  } = useSelector((state) => state.book);
+  const dispatch = useDispatch();
+  const loadBook = () => dispatch({ type: 'book/loadBook' });
+  const updateData = (payload) =>
+    dispatch({ type: 'book/updateData', payload });
+  const addItem = (payload) =>
+    dispatch({ type: 'cart/addItem', payload });
   useEffect(() => {
     loadBook();
   }, []);
@@ -94,7 +95,7 @@ function index(props) {
                 </Select>
               </div>
               <div className="list-box">
-                {listBook.map((item) => {
+                {(listBook || []).map((item) => {
                   return (
                     <Card
                       key={item.id}
@@ -169,41 +170,3 @@ function index(props) {
     </>
   );
 }
-
-const mapStateToProps = (state) => {
-  const {
-    book: {
-      listBook,
-      type,
-      nameSearch,
-      visible,
-      name,
-      author,
-      description,
-      avatar,
-      id,
-    },
-    cart: { listCart },
-  } = state;
-  return {
-    listBook,
-    type,
-    listCart,
-    nameSearch,
-    name,
-    author,
-    description,
-    avatar,
-    visible,
-    id,
-  };
-};
-const mapDispatchToProps = ({
-  book: { updateData, loadBook },
-  cart: { addItem },
-}) => ({
-  updateData,
-  addItem,
-  loadBook,
-});
-export default connect(mapStateToProps, mapDispatchToProps)(index);

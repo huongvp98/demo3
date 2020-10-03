@@ -1,4 +1,6 @@
 import bookProvider from '@data-access/book-provider';
+import snackbar from '@utils/snackbar-utils';
+import { message } from 'antd';
 export default {
   state: {
     listBook: [],
@@ -22,6 +24,10 @@ export default {
       });
       const { status, statusText, data } = res;
       if (status === 404 || status === 500) {
+        snackbar.show(
+          message || 'Đã xảy ra lỗi vui lòng thử lại sau!',
+          'danger',
+        );
         throw new Error(statusText);
       }
       dispatch.book.updateData({

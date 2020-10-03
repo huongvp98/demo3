@@ -14,14 +14,15 @@ export default {
     },
   },
   effects: (dispatch) => ({
-    loadCart: async (payload, state) => {
+    loadCart: async (payload = {}, state) => {
       let res = await cartProvider.search();
       const { status, statusText, data } = res;
       dispatch.cart.updateData({
         listCart: data,
+        productInCart: data.length,
       });
     },
-    addItem: (payload, state) => {
+    addItem: (payload = {}, state) => {
       let listCart = state.cart.listCart;
       let { n, item } = payload;
       let id;
@@ -43,7 +44,9 @@ export default {
             .then((s) => {
               if (s && (s.status === 200 || s.status === 201)) {
                 snackbar.show(
-                  'Thêm sách vào giỏ hàng thành công',
+                  n === 1
+                    ? 'Thêm sách vào giỏ hàng thành công'
+                    : 'Bỏ sản phẩm ra khỏi giỏ hàng thành công!',
                   'success',
                 );
                 dispatch.cart.loadCart();

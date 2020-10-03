@@ -1,10 +1,17 @@
 import { Button, Table } from 'antd';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './style.scss';
 
-function index(props) {
-  const { listCart, deleteItem, addItem, loadCart } = props;
+export default function index() {
+  const listCart = useSelector((state) => state.cart.listCart);
+  const dispatch = useDispatch();
+  const loadCart = (payload) =>
+    dispatch({ type: 'cart/loadCart', payload });
+  const deleteItem = (payload) =>
+    dispatch({ type: 'cart/loadCart', payload });
+  const addItem = (payload) =>
+    dispatch({ type: 'cart/addItem', payload });
   useEffect(() => {
     loadCart();
   }, []);
@@ -14,7 +21,6 @@ function index(props) {
       col1: index + 1,
       col2: item.cart.avatar,
       col3: item.cart.name,
-
       col4: item,
       col5: item,
     };
@@ -77,22 +83,7 @@ function index(props) {
           ]}
           dataSource={data}
         ></Table>
-        {/* <div>{productInCart}</div> */}
       </div>
     </>
   );
 }
-const mapStateToProps = (state) => {
-  const {
-    cart: { listCart, productInCart },
-  } = state;
-  return { listCart, productInCart };
-};
-const mapDispatchToProps = ({
-  cart: { deleteItem, addItem, loadCart },
-}) => ({
-  deleteItem,
-  addItem,
-  loadCart,
-});
-export default connect(mapStateToProps, mapDispatchToProps)(index);

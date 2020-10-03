@@ -1,20 +1,25 @@
 import { Button, Input, Menu } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import './style.scss';
 
-function index(props) {
-  const {
-    total,
-    nameSearch,
-    loadBook,
-    updateData,
-    timeRequest,
-    listCart,
-    loadCart,
-  } = props;
+export default function index(props) {
+  const dispatch = useDispatch();
+  const { nameSearch, timeRequest } = useSelector(
+    (state) => state.book,
+  );
+  const updateData = (payload) =>
+    dispatch({ type: 'book/updateData', payload });
+  const loadBook = (payload) =>
+    dispatch({ type: 'book/loadBook', payload });
+  const loadCart = (payload) =>
+    dispatch({ type: 'cart/loadCart', payload });
+  const productInCart = useSelector(
+    (state) => state.cart.productInCart,
+  );
+
   useEffect(() => {
     updateData({
       nameSearch: '',
@@ -23,13 +28,16 @@ function index(props) {
   }, []);
   const [pathname, setPathName] = useState(window.location.pathname);
   const history = useHistory();
+
   const changeKey = (e) => {
     history.push(e.key);
     setPathName(e.key);
   };
+
   const goToCart = () => {
     history.push('/cart');
   };
+
   const searchBook = (event) => {
     updateData({ nameSearch: event.target.value });
     if (timeRequest) {
@@ -37,7 +45,6 @@ function index(props) {
         clearTimeout(timeRequest);
       } catch (error) {}
     }
-
     let data = setTimeout(() => {
       loadBook();
     }, 500);
@@ -81,7 +88,7 @@ function index(props) {
             <div className="col-sm-1 col-md-1 col-1 cart-header">
               <div className="icon-header" onClick={goToCart}>
                 <i className="fal fa-shopping-cart"></i>
-                <div className="total-product">{listCart.length}</div>
+                <div className="total-product">{productInCart}</div>
               </div>
             </div>
           </div>
@@ -91,19 +98,3 @@ function index(props) {
     </>
   );
 }
-const mapStateToProps = (state) => {
-  const {
-    book: { nameSearch, timeRequest },
-    cart: { total, listCart },
-  } = state;
-  return { total, nameSearch, timeRequest, listCart };
-};
-const mapDispatchToProps = ({
-  book: { loadBook, updateData },
-  cart: { loadCart },
-}) => ({
-  loadBook,
-  updateData,
-  loadCart,
-});
-export default connect(mapStateToProps, mapDispatchToProps)(index);
