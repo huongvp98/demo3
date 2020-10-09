@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import RouterWithPaths from '@components/common/RouterWithPaths';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 import Loadable from 'react-loadable';
-import { useHistory } from 'react-router-dom';
 import '@styles/app.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -22,9 +20,6 @@ function NotFound() {
 }
 
 function Main(props) {
-  const history = useHistory();
-  const { auth } = props;
-
   useEffect(() => {}, []);
 
   const routers = [
@@ -60,7 +55,7 @@ function Main(props) {
           {routers.map((route, key) => {
             if (route.component)
               return (
-                <RouterWithPaths
+                <Route
                   exact
                   key={key}
                   path={route.path}

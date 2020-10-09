@@ -17,6 +17,13 @@ export default {
     loadCart: async (payload = {}, state) => {
       let res = await cartProvider.search();
       const { status, statusText, data } = res;
+      if (status !== 200 || status !== 201) {
+        snackbar.show(
+          statusText || 'Đã xảy ra lỗi vui lòng thử lại sau!',
+          'danger',
+        );
+        throw new Error(statusText);
+      }
       dispatch.cart.updateData({
         listCart: data,
         productInCart: data.length,

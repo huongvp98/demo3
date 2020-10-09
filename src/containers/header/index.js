@@ -3,6 +3,7 @@ import MenuItem from 'antd/lib/menu/MenuItem';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import './style.scss';
 
 export default function index(props) {
@@ -28,11 +29,6 @@ export default function index(props) {
   }, []);
   const [pathname, setPathName] = useState(window.location.pathname);
   const history = useHistory();
-
-  const changeKey = (e) => {
-    history.push(e.key);
-    setPathName(e.key);
-  };
 
   const goToCart = () => {
     history.push('/cart');
@@ -77,11 +73,17 @@ export default function index(props) {
                   theme="dark"
                   mode="horizontal"
                   selectedKeys={[pathname]}
-                  onClick={(e) => changeKey(e)}
+                  onClick={(e) => setPathName(e.key)}
                 >
-                  <Menu.Item key="/">Home</Menu.Item>
-                  <MenuItem key="/cart">Cart</MenuItem>
-                  <Menu.Item key="/contact">Contact</Menu.Item>
+                  <Menu.Item key="/">
+                    <Link to="/">Home</Link>{' '}
+                  </Menu.Item>
+                  <MenuItem key="/cart">
+                    <Link to="/cart">Cart</Link>
+                  </MenuItem>
+                  <Menu.Item key="/contact">
+                    <Link to="/contact">Contact</Link>
+                  </Menu.Item>
                 </Menu>
               </div>
             </div>

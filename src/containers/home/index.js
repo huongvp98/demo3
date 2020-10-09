@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Card, Carousel, Drawer, Select } from 'antd';
 import './style.scss';
 import { useDispatch, useSelector } from 'react-redux';
 const { Option } = Select;
 export default function index() {
   const {
-    listBook,
     visible,
     name,
     author,
@@ -14,6 +13,7 @@ export default function index() {
     id,
     type,
   } = useSelector((state) => state.book);
+  const listBook = useSelector((state) => state.book.listBook);
   const dispatch = useDispatch();
   const loadBook = () => dispatch({ type: 'book/loadBook' });
   const updateData = (payload) =>
@@ -131,7 +131,7 @@ export default function index() {
         bodyStyle={{ paddingBottom: 80 }}
       >
         <div className="avata-detail">
-          <img src={avatar} />
+          <img src={avatar} alt="" />
         </div>
         <div className="info-detail">
           <p className="title">Tác giả</p>

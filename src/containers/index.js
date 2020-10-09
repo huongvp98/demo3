@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import RouterWithPaths from '@components/common/RouterWithPaths';
 import Loadable from 'react-loadable';
 import Header from '@containers/header';
 import Footer from '@containers/footer';
@@ -48,7 +47,7 @@ function Layout(props) {
       <Switch>
         {routers.map((route, index) => {
           return (
-            <RouterWithPaths
+            <Route
               exact
               path={route.path}
               key={index}

@@ -7,7 +7,7 @@ export default {
     this.show(message, type, 6000);
   },
   show(message, type, duration) {
-    if (duration != 0 && !duration) duration = 3000;
+    if (duration !== 0 && !duration) duration = 3000;
     let _type = 'info';
     switch (type) {
       case 'warning':
@@ -15,6 +15,8 @@ export default {
       case 'success':
       case 'danger':
         _type = type;
+        break;
+      default:
         break;
     }
     this.showWithTitle('SBook', message, _type, duration);
@@ -35,6 +37,8 @@ export default {
         break;
       case 'warning':
         func = toast.warn;
+        break;
+      default:
         break;
     }
     func(description, {
