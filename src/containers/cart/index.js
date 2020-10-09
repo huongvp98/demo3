@@ -15,16 +15,27 @@ export default function index() {
   useEffect(() => {
     loadCart();
   }, []);
-  let data = listCart.map((item, index) => {
+  const priceFormat = (price) => {
+    let priceString = price.toString() + ',';
+    return priceString
+      .replace(/(\d)(?=(\d{3})+,)/g, '$1.')
+      .replace(',', '');
+  };
+  let data = listCart.map((item) => {
     return {
       key: item.id,
-      col1: index + 1,
-      col2: item.cart.avatar,
-      col3: item.cart.name,
+      col1: item.cart.avatar,
+      col2: item.cart.name,
+      col3: item.cart.price ? priceFormat(item.cart.price) : null,
       col4: item,
-      col5: item,
     };
   });
+  const getMoney = () => {
+    let sum = 0;
+    listCart.map((item) => (sum += item.cart.price * item.amount));
+    let sumTrans = priceFormat(sum);
+    return sumTrans;
+  };
   return (
     <>
       <div className="cart-body">
@@ -32,34 +43,38 @@ export default function index() {
           columns={[
             {
               title: 'Ảnh Bìa',
-              dataIndex: 'col2',
-              key: '2',
+              dataIndex: 'col1',
+              key: '1',
               render: (avatar) => {
                 return <img src={avatar} alt="" />;
               },
             },
             {
               title: 'Tên sách',
-              dataIndex: 'col3',
-              key: '3',
+              dataIndex: 'col2',
+              key: '2',
               render: (name) => {
                 return <div className="book-name">{name}</div>;
               },
             },
             {
+              title: 'Giá (VNĐ)',
+              dataIndex: 'col3',
+              key: '3',
+            },
+            {
               title: 'Số lượng',
               dataIndex: 'col4',
               key: '4',
-              width: 150,
               render: (item) => {
                 return (
-                  <div>
+                  <div className="add-item">
                     <Button onClick={() => addItem({ n: -1, item })}>
-                      -
+                      <i class="fal fa-chevron-up"></i>
                     </Button>
                     <span className="amount">{item.amount}</span>
                     <Button onClick={() => addItem({ n: 1, item })}>
-                      +
+                      <i class="fal fa-chevron-down"></i>
                     </Button>
                   </div>
                 );
@@ -83,6 +98,9 @@ export default function index() {
           ]}
           dataSource={data}
         ></Table>
+        <div className="sum-money">
+          <span>Tổng tiền: {getMoney()} VNĐ</span>
+        </div>
       </div>
     </>
   );

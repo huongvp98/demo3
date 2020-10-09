@@ -42,6 +42,12 @@ export default function index() {
       id: item.id,
     });
   };
+  const priceFormat = (price) => {
+    let priceString = price.toString() + ',';
+    return priceString
+      .replace(/(\d)(?=(\d{3})+,)/g, '$1.')
+      .replace(',', '');
+  };
   return (
     <>
       <div className="warp-home">
@@ -107,6 +113,9 @@ export default function index() {
                         onClick={() => showDetail(item)}
                       >
                         {item.name}
+                      </span>
+                      <span className="price">
+                        {priceFormat(item.price)} VNĐ
                       </span>
                       <div className="button-add">
                         <Button onClick={() => onAddItem(1, item)}>

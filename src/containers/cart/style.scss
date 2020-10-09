@@ -1,10 +1,12 @@
 .cart-body {
   margin-top: 130px;
+  margin-bottom: 50px;
   min-height: calc(100vh - 130px);
   @media (max-width: 767px) {
     margin-top: 180px;
     min-height: calc(100vh - 180px);
   }
+  overflow: auto;
 }
 .ant-table-tbody {
   font-size: 20px;
@@ -18,11 +20,20 @@
         @media (max-width: 519px) {
           width: 68px;
         }
+        @media (max-width: 652px) {
+          width: 90px;
+        }
       }
       .ant-btn {
         @media (max-width: 519px) {
           padding: 6px 8px;
         }
+      }
+      @media (max-width: 652px) {
+        font-size: 14px;
+      }
+      .add-item {
+        text-align: center;
       }
     }
   }
@@ -43,4 +54,18 @@
   -webkit-box-orient: vertical;
   margin-bottom: 10px;
   font-weight: bold;
+}
+.sum-money {
+  text-align: right;
+  span {
+    margin-right: 135px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    @media (max-width: 440px) {
+      margin: 0;
+    }
+  }
+  @media (max-width: 440px) {
+    text-align: center;
+  }
 }

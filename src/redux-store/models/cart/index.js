@@ -38,57 +38,51 @@ export default {
       );
       if (n === -1 && item.amount === 1) {
         dispatch.cart.deleteItem(item);
+        return;
+      }
+      if (check === -1) {
+        item.amount = 1;
       } else {
-        if (check === -1) {
-          item.amount = 1;
-        } else {
-          item.amount = listCart[check].amount + n;
-          id = listCart[check].id;
-        }
-        return new Promise((resolve, reject) => {
-          cartProvider
-            .createOrEdit(item, id)
-            .then((s) => {
-              if (s && (s.status === 200 || s.status === 201)) {
-                snackbar.show(
-                  n === 1
-                    ? 'Thêm sách vào giỏ hàng thành công'
-                    : 'Bỏ sản phẩm ra khỏi giỏ hàng thành công!',
-                  'success',
-                );
-                dispatch.cart.loadCart();
-                resolve(s.data);
-              } else if (s.status === 404) {
-                snackbar.show(
-                  'Không tìm thấy kết quả phù hợp',
-                  'danger',
-                );
-                dispatch.book.loadBook();
-                dispatch.loadCart.loadCart();
-                reject();
-              } else if (s.status === 500) {
-                snackbar.show(
-                  s.statusText || 'Xảy ra lỗi vui lòng thử lại sau',
-                  'danger',
-                );
-                reject();
-              } else {
-                snackbar.show(
-                  s.statusText || 'Xảy ra lỗi vui lòng thử lại sau',
-                  'danger',
-                );
-                reject();
-              }
-            })
-            .catch((e) => {
+        item.amount = listCart[check].amount + n;
+        id = listCart[check].id;
+      }
+      return new Promise((resolve, reject) => {
+        cartProvider
+          .createOrEdit(item, id)
+          .then((s) => {
+            if (s && (s.status === 200 || s.status === 201)) {
+              // snackbar.show(
+              //   n === 1
+              //     ? 'Thêm sách vào giỏ hàng thành công'
+              //     : 'Bỏ sản phẩm ra khỏi giỏ hàng thành công!',
+              //   'success',
+              // );
+              dispatch.cart.loadCart();
+              resolve(s.data);
+            } else if (s.status === 404) {
               snackbar.show(
-                e || 'Xảy ra lỗi vui lòng thử lại sau!',
+                'Không tìm thấy kết quả phù hợp',
+                'danger',
+              );
+              dispatch.book.loadBook();
+              dispatch.loadCart.loadCart();
+              reject();
+            } else {
+              snackbar.show(
+                s.statusText || 'Xảy ra lỗi vui lòng thử lại sau',
                 'danger',
               );
               reject();
-            });
-        });
-      }
+            }
+          })
+          .catch((e) => {
+            snackbar.show(
+              e || 'Xảy ra lỗi vui lòng thử lại sau!',
+              'danger',
+            );
+            reject();
+          });
+      });
     },
     deleteItem: (payload, state) => {
       return new Promise((resolve, reject) => {
