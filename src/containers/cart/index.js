@@ -70,11 +70,11 @@ export default function index() {
                 return (
                   <div className="add-item">
                     <Button onClick={() => addItem({ n: -1, item })}>
-                      <i class="fal fa-chevron-up"></i>
+                      <i className="fal fa-chevron-up"></i>
                     </Button>
                     <span className="amount">{item.amount}</span>
                     <Button onClick={() => addItem({ n: 1, item })}>
-                      <i class="fal fa-chevron-down"></i>
+                      <i className="fal fa-chevron-down"></i>
                     </Button>
                   </div>
                 );
