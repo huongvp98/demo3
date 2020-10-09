@@ -106,7 +106,13 @@ export default function index() {
                     <Card
                       key={item.id}
                       hoverable
-                      cover={<img alt="" src={item.avatar} />}
+                      cover={
+                        <img
+                          alt=""
+                          src={item.avatar}
+                          onClick={() => showDetail(item)}
+                        />
+                      }
                     >
                       <span
                         className="title-book"
