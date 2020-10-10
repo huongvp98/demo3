@@ -37,6 +37,13 @@ function Layout(props) {
         loading: Loading,
       }),
     },
+    {
+      path: ['/report'],
+      component: Loadable({
+        loader: () => import('@containers/report'),
+        loading: Loading,
+      }),
+    },
   ];
 
   return (

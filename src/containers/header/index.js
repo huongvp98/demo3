@@ -81,8 +81,11 @@ export default function index(props) {
                   <MenuItem key="/cart">
                     <Link to="/cart">Cart</Link>
                   </MenuItem>
-                  <Menu.Item key="/contact">
+                  {/* <Menu.Item key="/contact">
                     <Link to="/contact">Contact</Link>
+                  </Menu.Item> */}
+                  <Menu.Item key="/report">
+                    <Link to="/report">Report</Link>
                   </Menu.Item>
                 </Menu>
               </div>
