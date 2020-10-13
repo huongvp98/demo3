@@ -51,12 +51,14 @@ export default {
           .createOrEdit(item, id)
           .then((s) => {
             if (s && (s.status === 200 || s.status === 201)) {
-              // snackbar.show(
-              //   n === 1
-              //     ? 'Thêm sách vào giỏ hàng thành công'
-              //     : 'Bỏ sản phẩm ra khỏi giỏ hàng thành công!',
-              //   'success',
-              // );
+              if (window.location.pathname === '/') {
+                snackbar.show(
+                  n === 1
+                    ? 'Thêm sách vào giỏ hàng thành công'
+                    : 'Bỏ sản phẩm ra khỏi giỏ hàng thành công!',
+                  'success',
+                );
+              }
               dispatch.cart.loadCart();
               resolve(s.data);
             } else if (s.status === 404) {
