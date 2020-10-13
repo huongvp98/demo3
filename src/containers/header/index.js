@@ -27,7 +27,7 @@ export default function index(props) {
     });
     loadCart();
   }, []);
-  const [pathname, setPathName] = useState(window.location.pathname);
+  const [key, setKey] = useState(window.location.pathname);
   const history = useHistory();
 
   const goToCart = () => {
@@ -72,8 +72,8 @@ export default function index(props) {
                 <Menu
                   theme="dark"
                   mode="horizontal"
-                  selectedKeys={[pathname]}
-                  onClick={(e) => setPathName(e.key)}
+                  selectedKeys={[key]}
+                  onClick={(e) => setKey(e.key)}
                 >
                   <Menu.Item key="/">
                     <Link to="/">Home</Link>{' '}

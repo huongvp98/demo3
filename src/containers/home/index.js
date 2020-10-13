@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Button, Card, Carousel, Drawer, Select } from 'antd';
 import './style.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 const { Option } = Select;
-export default function index() {
+function index(props) {
   const {
     visible,
     name,
@@ -12,14 +12,12 @@ export default function index() {
     avatar,
     id,
     type,
-  } = useSelector((state) => state.book);
-  const listBook = useSelector((state) => state.book.listBook);
-  const dispatch = useDispatch();
-  const loadBook = () => dispatch({ type: 'book/loadBook' });
-  const updateData = (payload) =>
-    dispatch({ type: 'book/updateData', payload });
-  const addItem = (payload) =>
-    dispatch({ type: 'cart/addItem', payload });
+    listBook,
+    loadBook,
+    addItem,
+    updateData,
+    price,
+  } = props;
   useEffect(() => {
     loadBook();
   }, []);
@@ -40,6 +38,7 @@ export default function index() {
       author: item.author,
       avatar: item.avatar,
       id: item.id,
+      price: item.price,
     });
   };
   const priceFormat = (price) => {
@@ -153,6 +152,10 @@ export default function index() {
           <p>{author}</p>
         </div>
         <div className="info-detail">
+          <p className="title">Giá</p>
+          <p>{priceFormat(price)} VNĐ</p>
+        </div>
+        <div className="info-detail">
           <p className="title">Mô tả</p>
           <p>{description}</p>
         </div>
@@ -185,3 +188,34 @@ export default function index() {
     </>
   );
 }
+const mapStateToProps = (state) => {
+  const {
+    book: {
+      listBook,
+      visible,
+      name,
+      author,
+      description,
+      avatar,
+      id,
+      type,
+      price,
+    },
+  } = state;
+  return {
+    listBook,
+    visible,
+    name,
+    author,
+    description,
+    avatar,
+    id,
+    type,
+    price: price || '',
+  };
+};
+const mapDispatchToProps = ({
+  book: { loadBook, updateData },
+  cart: { addItem },
+}) => ({ loadBook, updateData, addItem });
+export default connect(mapStateToProps, mapDispatchToProps)(index);

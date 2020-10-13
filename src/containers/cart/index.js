@@ -1,17 +1,10 @@
 import { Button, Table } from 'antd';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import './style.scss';
 
-export default function index() {
-  const listCart = useSelector((state) => state.cart.listCart);
-  const dispatch = useDispatch();
-  const loadCart = (payload) =>
-    dispatch({ type: 'cart/loadCart', payload });
-  const deleteItem = (payload) =>
-    dispatch({ type: 'cart/loadCart', payload });
-  const addItem = (payload) =>
-    dispatch({ type: 'cart/addItem', payload });
+function index(props) {
+  const { listCart, loadCart, addItem, deleteItem } = props;
   useEffect(() => {
     loadCart();
   }, []);
@@ -105,3 +98,13 @@ export default function index() {
     </>
   );
 }
+const mapStateToProps = (state) => {
+  const {
+    cart: { listCart },
+  } = state;
+  return { listCart: listCart || [] };
+};
+const mapDispatchToProps = ({
+  cart: { addItem, loadCart, deleteItem },
+}) => ({ addItem, loadCart, deleteItem });
+export default connect(mapStateToProps, mapDispatchToProps)(index);
