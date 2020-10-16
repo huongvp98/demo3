@@ -2,15 +2,12 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
-import Loadable from 'react-loadable';
 import '@styles/app.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-
-function Loading() {
-  return <div></div>;
-}
-
+import Containers from '@containers';
+import Print from '@containers/print-bill';
+import RouterWithPaths from '@components/RouterWithPaths';
 function NotFound() {
   return (
     <>
@@ -24,29 +21,14 @@ function Main(props) {
 
   const routers = [
     {
-      path: ['/'],
-      component: Loadable({
-        loader: () => import('@containers'),
-        loading: Loading,
-      }),
-    },
-
-    {
-      path: ['/:function'],
-      component: Loadable({
-        loader: () => import('@containers'),
-        loading: Loading,
-      }),
+      path: '/print-bill',
+      component: Print,
     },
     {
-      path: ['/:function/:id'],
-      component: Loadable({
-        loader: () => import('@containers'),
-        loading: Loading,
-      }),
+      path: ['/', '/:function', '/:function/:id'],
+      component: Containers,
     },
   ];
-
   return (
     <>
       <ToastContainer autoClose={3000} />
@@ -55,7 +37,7 @@ function Main(props) {
           {routers.map((route, key) => {
             if (route.component)
               return (
-                <Route
+                <RouterWithPaths
                   exact
                   key={key}
                   path={route.path}
@@ -66,7 +48,7 @@ function Main(props) {
               );
             return null;
           })}
-          <Route path="*" component={NotFound} />
+          <Route component={NotFound} />
         </Switch>
       </BrowserRouter>
     </>

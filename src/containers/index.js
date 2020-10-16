@@ -6,13 +6,17 @@ import Footer from '@containers/footer';
 function Loading() {
   return <div></div>;
 }
-function NotFound() {
-  return (
-    <>
-      <h2>Not found</h2>
-    </>
-  );
-}
+// function NotFound() {
+//   return (
+//     <>
+//       <div
+//         style={{ marginTop: 130, minHeight: 'calc(100vh - 130px)' }}
+//       >
+//         <h2>Not found</h2>
+//       </div>
+//     </>
+//   );
+// }
 
 function Layout(props) {
   const routers = [
@@ -62,7 +66,7 @@ function Layout(props) {
             />
           );
         })}
-        <Route path="*" component={NotFound} />
+        {/* <Route component={NotFound} /> */}
       </Switch>
       <Footer />
     </>

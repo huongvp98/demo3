@@ -2,9 +2,17 @@ import { Button, Table } from 'antd';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './style.scss';
+import Iframe from 'react-iframe';
 
 function index(props) {
-  const { listCart, loadCart, addItem, deleteItem } = props;
+  const {
+    listCart,
+    loadCart,
+    addItem,
+    deleteItem,
+    updateData,
+    isPrint,
+  } = props;
   useEffect(() => {
     loadCart();
   }, []);
@@ -28,6 +36,16 @@ function index(props) {
     listCart.map((item) => (sum += item.cart.price * item.amount));
     let sumTrans = priceFormat(sum);
     return sumTrans;
+  };
+  const onPrint = () => {
+    updateData({
+      isPrint: true,
+    });
+    setTimeout(() => {
+      props.updateData({
+        isPrint: false,
+      });
+    }, 1000);
   };
   return (
     <>
@@ -94,17 +112,40 @@ function index(props) {
         <div className="sum-money">
           <span>Tổng tiền: {getMoney()} VNĐ</span>
         </div>
+        <div
+          style={{
+            textAlign: 'right',
+            marginRight: 150,
+            marginTop: 30,
+          }}
+          className="bill"
+        >
+          <Button type="primary" onClick={onPrint}>
+            In hóa đơn
+          </Button>
+          {isPrint ? (
+            <Iframe
+              url={window.location.origin + '/print-bill'}
+              width="0"
+              height="0"
+              id="myId"
+              className="myPrint"
+              display="block"
+              position="relative"
+            ></Iframe>
+          ) : null}
+        </div>
       </div>
     </>
   );
 }
 const mapStateToProps = (state) => {
   const {
-    cart: { listCart },
+    cart: { listCart, isPrint },
   } = state;
-  return { listCart: listCart || [] };
+  return { listCart: listCart || [], isPrint: isPrint || false };
 };
 const mapDispatchToProps = ({
-  cart: { addItem, loadCart, deleteItem },
-}) => ({ addItem, loadCart, deleteItem });
+  cart: { addItem, loadCart, deleteItem, updateData },
+}) => ({ addItem, loadCart, deleteItem, updateData });
 export default connect(mapStateToProps, mapDispatchToProps)(index);
