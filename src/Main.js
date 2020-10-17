@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import Containers from '@containers';
 import Print from '@containers/print-bill';
 import RouterWithPaths from '@components/RouterWithPaths';
+import Auth from '@components/LoginScreen';
 function NotFound() {
   return (
     <>
@@ -17,9 +18,26 @@ function NotFound() {
 }
 
 function Main(props) {
-  useEffect(() => {}, []);
-
   const routers = [
+    {
+      path: ['/login'],
+      component: Auth,
+    },
+    {
+      path: '/logout',
+      component: connect(
+        (state) => {
+          return { auth: state.auth.auth || {} };
+        },
+        ({ auth: { onLogout } }) => {
+          return { onLogout };
+        },
+      )((props) => {
+        props.onLogout();
+        window.location.href = '/login';
+        return <div></div>;
+      }),
+    },
     {
       path: '/print-bill',
       component: Print,

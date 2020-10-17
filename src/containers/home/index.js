@@ -17,18 +17,27 @@ function index(props) {
     addItem,
     updateData,
     price,
+    auth,
   } = props;
   useEffect(() => {
     loadBook();
   }, []);
+  // const history = useHistory();
   const onAddItem = (n, payload) => {
-    let item = {
-      cart: payload,
-      cartId: payload.id,
-      amount: 0,
-    };
-    addItem({ n, item });
-    updateData({ visible: false });
+    let checkAuth = auth && auth.id && auth.access_token;
+    if (!checkAuth) {
+      localStorage.clear();
+      props.history.push('/login');
+      return;
+    } else {
+      let item = {
+        cart: payload,
+        cartId: payload.id,
+        amount: 0,
+      };
+      addItem({ n, item });
+      updateData({ visible: false });
+    }
   };
   const showDetail = (item) => {
     updateData({
@@ -201,6 +210,7 @@ const mapStateToProps = (state) => {
       type,
       price,
     },
+    auth: { auth },
   } = state;
   return {
     listBook,
@@ -212,6 +222,7 @@ const mapStateToProps = (state) => {
     id,
     type,
     price: price || '',
+    auth,
   };
 };
 const mapDispatchToProps = ({

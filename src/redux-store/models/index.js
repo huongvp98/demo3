@@ -1,3 +1,4 @@
 import book from './book';
 import cart from './cart';
-export { book, cart };
+import auth from './auth';
+export { book, cart, auth };

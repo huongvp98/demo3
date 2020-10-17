@@ -1,8 +1,9 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Header from '@containers/header';
 import Footer from '@containers/footer';
+import { getState } from '../redux-store/stores';
 function Loading() {
   return <div></div>;
 }
@@ -49,7 +50,18 @@ function Layout(props) {
       }),
     },
   ];
-
+  const history = useHistory();
+  const url = window.location.pathname;
+  if (url !== '/') {
+    const auth = getState().auth.auth;
+    let checkAuth = auth && auth.id && auth.access_token;
+    if (!checkAuth) {
+      localStorage.clear();
+      history.push('/login');
+      return null;
+    } else {
+    }
+  }
   return (
     <>
       <div className="page-wrapper">
