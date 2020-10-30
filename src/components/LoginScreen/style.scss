@@ -1,0 +1,26 @@
+.login-page {
+  .login-form {
+    width: 480px;
+    margin: auto;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    margin-top: 50px;
+    .title {
+      font-size: 24px;
+      text-transform: uppercase;
+      padding-top: 30px;
+    }
+    .ant-form {
+      margin: 0px 45px;
+      padding-bottom: 50px;
+      .ant-btn {
+        width: 100%;
+        border-radius: 25px;
+        text-transform: uppercase;
+        box-shadow: 0 5px 25px 0px rgba(3, 216, 222, 0.2);
+        height: 40px;
+        margin-top: 10px;
+      }
+    }
+  }
+}

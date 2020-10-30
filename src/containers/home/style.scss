@@ -45,17 +45,25 @@
       }
     }
     .book-shop {
-      .filter-book {
-        margin: 50px 50px;
-        span {
+      .action {
+        display: flex;
+        padding: 50px;
+        .filter-book {
           display: inline-block;
-          margin-right: 25px;
-        }
-        .ant-select {
-          width: 170px;
           span {
-            margin-right: 0px;
+            display: inline-block;
+            margin-right: 25px;
           }
+          .ant-select {
+            width: 170px;
+            span {
+              margin-right: 0px;
+            }
+          }
+        }
+        .login-out {
+          display: inline-block;
+          margin-left: auto;
         }
       }
     }

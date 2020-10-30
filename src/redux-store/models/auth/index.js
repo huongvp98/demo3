@@ -15,7 +15,7 @@ export default {
         );
         auth = decryptedData;
         return auth;
-      } catch (error) {}
+      } catch (error) { }
       return null;
     })(),
   },

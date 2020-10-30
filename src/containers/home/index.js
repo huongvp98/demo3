@@ -18,6 +18,7 @@ function index(props) {
     updateData,
     price,
     auth,
+    onLogout
   } = props;
   useEffect(() => {
     loadBook();
@@ -92,22 +93,32 @@ function index(props) {
               </div>
             </div>
             <div className="book-shop">
-              <div className="filter-book">
-                <span>Lọc theo</span>
-                <Select
-                  placeholder="Lọc theo loại sách"
-                  onChange={(e) => {
-                    updateData({ type: e });
-                    loadBook();
-                  }}
-                  value={type}
-                >
-                  <Option value="">Tất cả</Option>
-                  <Option value={1}>Sách văn học</Option>
-                  <Option value={2}>Sách doanh nhân</Option>
-                  <Option value={3}>Sách kỹ năng</Option>
-                </Select>
+              <div className="action">
+                <div className="filter-book">
+                  <span>Lọc theo</span>
+                  <Select
+                    placeholder="Lọc theo loại sách"
+                    onChange={(e) => {
+                      updateData({ type: e });
+                      loadBook();
+                    }}
+                    value={type}
+                  >
+                    <Option value="">Tất cả</Option>
+                    <Option value={1}>Sách văn học</Option>
+                    <Option value={2}>Sách doanh nhân</Option>
+                    <Option value={3}>Sách kỹ năng</Option>
+                  </Select>
+                </div>
+                <div className="login-out">
+                  {
+                    auth ?
+                      <Button type="danger" onClick={() => onLogout()}>Đăng xuất</Button> :
+                      <Button type="primary" onClick={() => props.history.push("/login")}>Đăng nhập</Button>
+                  }
+                </div>
               </div>
+
               <div className="list-box">
                 {(listBook || []).map((item) => {
                   return (
@@ -228,5 +239,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = ({
   book: { loadBook, updateData },
   cart: { addItem },
-}) => ({ loadBook, updateData, addItem });
+  auth: { onLogout }
+}) => ({ loadBook, updateData, addItem, onLogout });
 export default connect(mapStateToProps, mapDispatchToProps)(index);
