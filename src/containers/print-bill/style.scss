@@ -1,3 +1,26 @@
-.title{
-  text-align: center  ;
+.title {
+  text-align: center;
+}
+.book-name {
+  width: 50%;
+}
+.book-price {
+  width: 25%;
+}
+.book-amount {
+  width: 25%;
+}
+.sum-money {
+  text-align: right;
+  span {
+    margin-right: 135px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    @media (max-width: 440px) {
+      margin: 0;
+    }
+  }
+  @media (max-width: 440px) {
+    text-align: center;
+  }
 }

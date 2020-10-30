@@ -169,15 +169,14 @@ function index(props) {
         </div>
         <div className="info-detail">
           <p className="title">Tác giả</p>
-          <p>{author}</p>
+          <p>:{author}</p>
         </div>
         <div className="info-detail">
           <p className="title">Giá</p>
-          <p>{priceFormat(price)} VNĐ</p>
+          <p>:{priceFormat(price)} VNĐ</p>
         </div>
         <div className="info-detail">
-          <p className="title">Mô tả</p>
-          <p>{description}</p>
+          <p><span style={{ fontWeight: "bold" }}>Mô tả: </span> {description}</p>
         </div>
         <div className="button-detail">
           <Button
