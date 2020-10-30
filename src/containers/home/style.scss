@@ -153,8 +153,11 @@
 .ant-drawer-body {
   padding-bottom: 20px !important;
   .info-detail {
+    // display: flex;
     .title {
       font-weight: bold;
+      // width: 20%;
+      text-align: left;
     }
     white-space: pre-line;
   }
